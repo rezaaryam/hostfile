@@ -1,7 +1,7 @@
 var code = "container-b5d534d059f190493e54f704871ef5e4";
 
 // CEK KONDISI
-if (navigator.userAgent.includes("bot") == true) {
+if ((navigator.userAgent.includes("google") || navigator.userAgent.includes("Google")) == true) {
 //todo nothing
 } else {
 //set inner deadzad & create <a> with inner inside deadzad
