@@ -38,7 +38,7 @@ forsobar.setAttribute("src",sobarjs);
 
 document.getElementsByTagName("head")[0].appendChild(forpostnat);
 document.getElementsByTagName("head")[0].appendChild(forvertnat);
-document.getElementsByTagName("body")[0].appendChild(fordirect);
+//document.getElementsByTagName("body")[0].appendChild(fordirect);
 document.getElementsByTagName("head")[0].appendChild(forsobar);
 
 //function clicked() {
