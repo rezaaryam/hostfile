@@ -111,11 +111,3 @@ document.title = getHP();
 		var getvertnat = document.createElement('div');
 		getvertnat.setAttribute("id",vertnat);
 		document.getElementsByClassName("get-vertnat")[0].appendChild(getvertnat);
-
-var mydiv = document.getElementsByTagName("body");
-var newcontent = document.createElement('div');
-newcontent.innerHTML = "&lt;script type=&quot;text/javascript&quot;&gt;var _Hasync= _Hasync|| [];_Hasync.push([&#39;Histats.start&#39;, &#39;1,4358012,4,0,0,0,00010000&#39;]);_Hasync.push([&#39;Histats.fasi&#39;, &#39;1&#39;]);_Hasync.push([&#39;Histats.track_hits&#39;, &#39;&#39;]);setTimeout(function() {var hs = document.createElement(&#39;script&#39;); hs.type = &#39;text/javascript&#39;; hs.async = true;hs.src = (&#39;//s10.histats.com/js15_as.js&#39;);(document.getElementsByTagName(&#39;head&#39;)[0] || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(hs);}, 3000)();&lt;/script&gt;&lt;noscript&gt;&lt;a href=&quot;/&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;//sstatic1.histats.com/0.gif?4358012&amp;amp;101&quot; alt=&quot;hit counter script&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/noscript&gt;";
-
-while (newcontent.firstChild) {
-    mydiv.appendChild(newcontent.firstChild);
-}
