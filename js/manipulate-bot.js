@@ -5,6 +5,7 @@ function getHP() {
 	return hipy[Math.floor(Math.random() * hipy.length)]
 }
 
+function loadDeadz() {
 //VARIABLE KODE IKLAN
 
 //Postnat = iklan native di dalam post (unisexbabyclothes701.blogspot.com) [div]
@@ -111,3 +112,4 @@ document.title = getHP();
 		var getvertnat = document.createElement('div');
 		getvertnat.setAttribute("id",vertnat);
 		document.getElementsByClassName("get-vertnat")[0].appendChild(getvertnat);
+}
