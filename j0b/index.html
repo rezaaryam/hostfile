@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fazzt Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script> <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Start your code here -->
+    <section class="hero is-small is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    Fazzt Search
+                </h1>
+                <!--
+      <h2 class="subtitle">
+        Primary subtitle
+      </h2>
+-->
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                        <!-- INFO -->
+                        <div class="field is-hidden" id="s-info">
+						<div class="column is-mobile">
+                            
+                            <div class="field is-italic has-text-centered" id="info">
+                                
+                            </div>
+                            </div>
+							
+                            
+                        </div>
+						
+						
+                        
+						
+						<div class="field is-hidden" id="s-article">
+						<div class="column is-mobile">
+						<article class="media">
+						<div class="media-content">
+                            
+							<article class="media">
+                                        </article>
+                            <div class="field is-italic has-text-centered">
+							<ul id="forpostinfo">
+							</ul>
+                            </div>
+							</div>
+							</article>
+                            </div>
+							
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- End your code here -->
+</body>
+<script>
+var getParams = function (url) {
+	var params = {};
+	var parser = document.createElement('a');
+	parser.href = url;
+	var query = parser.search.substring(1);
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		params[pair[0]] = decodeURIComponent(pair[1]);
+	}
+	return params;
+};
+// Get parameters from the current URL
+redurl = getParams(window.location.href);
+if (redurl[""] == "undefined") {
+} else {
+	
+urldec = CryptoJS.AES.decrypt(redurl["u"], "Sukses").toString(CryptoJS.enc.Utf8);
+var lines = urldec.split("\n");
+		
+        var lines = Array.from(new Set(lines));
+        
+        for (var z = 0; z < lines.length; z++) {
+            lines[z] = lines[z].replace(/^(http|https):\/\//i, '');
+            lines[z] = lines[z].replace(/\/.*/g, '');
+        }
+        
+        var PATTERN = /blogspot/,
+            lines = lines.filter(function(str) {
+                return PATTERN.test(str);
+            });
+        
+        var lines = Array.from(new Set(lines));
+        
+        var interval = 1000;
+        var promise = Promise.resolve();
+	
+	document.getElementById("s-info").classList.remove("is-hidden");
+	
+	
+	
+	document.getElementById("s-article").classList.remove("is-hidden");
+	 
+        document.getElementById("info").innerHTML = '<span class="is-size-3 has-text-weight-semibold" id="sitemap">0</span> Sitemaps found with <span class="is-size-4 has-text-weight-semibold" id="post">0</span> Post';
+		
+console.log(lines.length);
+        if (lines.length > 0) {
+            lines.forEach(function(el) {
+                promise = promise.then(function() {
+                    
+                    function loadXMLDoc() {
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                myFunction(this);
+                            } else if (this.status == 302 || this.status == 404) {
+							window.location.replace("http://" + el);
+							}
+                        };
+                        xmlhttp.open("GET", "https://cors-anywhere.herokuapp.com/" + el + "/feeds/posts/default?", true);
+                        xmlhttp.send();
+                    }
+                    
+                    function myFunction(xml) {
+                        var x, i, xmlDoc, txtrobots, txtsitemap;
+                        el = "https://" + el;
+                        xmlDoc = xml.responseXML;
+                        txtrobots = "";
+                        txtsitemap = "";
+						
+						txtsummary ="";
+						z =""
+						
+                        x = xmlDoc.getElementsByTagName("openSearch:totalResults")[0].childNodes[0].nodeValue;
+						y = xmlDoc.getElementsByTagName("title");
+						
+						yz = ""; 
+						try {
+							yz = xmlDoc.getElementsByTagName("summary");
+							yz[0].childNodes[0].nodeValue;
+						} catch(err) {
+							yz = xmlDoc.getElementsByTagName("content");
+						}
+					
+                        
+						document.title = y[1].childNodes[0].nodeValue;
+                        for (i = 1, j = 0; i < ((x / 150)+1); i++, j++) {
+							txtrobots += 'Sitemap: ' + el + "/sitemap.xml?page=" + i + "\n";
+							txtsitemap += '<li>' + el + "/sitemap.xml?page=" + i + "</li>";
+							
+                        }
+						for (i = 1; i < y.length; i++ ) {
+							txtsummary += '<li><strong>' + y[i].childNodes[0].nodeValue + '</strong>' + yz[i-1].childNodes[0].nodeValue + '</li>';
+						}
+						 
+                       
+                       
+                        document.getElementById("sitemap").innerHTML = j;
+                        document.getElementById("post").innerHTML = x;
+                        
+						
+						document.getElementById("forpostinfo").innerHTML += txtsummary;
+                       
+                    }
+                    loadXMLDoc();
+                    return new Promise(function(resolve) {
+                        setTimeout(resolve, interval);
+                    });
+                });
+            });
+            //}
+        } else {
+            document.getElementById('info').innerHTML = '<span class="is-size-3 has-text-weight-semibold">Not Found</span>'
+        }
+		}
+</script>
+</html>
